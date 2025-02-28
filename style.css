@@ -42,7 +42,7 @@ h1{
     --itchio_button_fg_color: #ffffff;
     --itchio_button_shadow_color: #c98b57;
     background-color: #eeeeee;
-    background-image: url(https://img.itch.zone/aW1nLzI1MzcwNzYucG5n/original/FptQMj.png);
+    background-image: url("img/Brown.png");
     background-repeat: repeat;
     background-position: 50% 0;
 }
