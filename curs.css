@@ -114,8 +114,6 @@ div {
 
 button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0);
     border: none;
     font-size: 30px;
@@ -124,6 +122,17 @@ button {
     z-index: 10;
     width: 60px;
     height: 60px;
+}
+.prev, .next{
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: top 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+}
+.prev:hover, .next:hover{
+    top: 49%;
+    transform: translateY(-49%);
+    transition: top 0.3s ease, transform 0.3s ease; /* Анимация для top и transform */
 }
 
 button img {
@@ -148,6 +157,7 @@ button img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    transition: top 0.3s ease, transform 0.3s ease;
     background-color: rgba(255, 255, 255, 0);
     border: none;
     font-size: 30px;
@@ -158,6 +168,10 @@ button img {
     height: 45px;
     left: 60px;
     top: 70px;
+}
+.play:hover{
+    top: 65px;
+    transition: top 0.3s ease, transform 0.3s ease;
 }
 .play img{
     transform: scale(-1, 1);

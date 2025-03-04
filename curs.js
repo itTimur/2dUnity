@@ -68,3 +68,4 @@ function moveSlide(step) {
     const slideTextElement = document.getElementById('slideText');
     slideTextElement.textContent = slideTexts[currentSlide];
 }
+

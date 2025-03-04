@@ -121,8 +121,6 @@ div {
 
 button {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: rgba(255, 255, 255, 0);
     border: none;
     font-size: 30px;
@@ -131,6 +129,16 @@ button {
     z-index: 10;
     width: 60px;
     height: 60px;
+}
+.prev, .next{
+    top: 50%;
+    transform: translateY(-50%);
+    transition: top 0.3s ease, transform 0.3s ease;
+}
+.prev:hover, .next:hover{
+    top: 49%;
+    transform: translateY(-49%);
+    transition: top 0.3s ease, transform 0.3s ease; /* Анимация для top и transform */
 }
 
 button img {
@@ -169,4 +177,5 @@ button img {
 
 .navigate-btn:hover {
     background-color: #c98b57;
+    transition: background-color 0.3s ease;
 }

@@ -90,15 +90,89 @@
                     </div>
                 </div>
                 <button class="prev" onclick="moveSlide(-1)">
-                    <img src="img/prev.png" alt="left">
+                    <img class="prevBtn" src="img/prev.png" alt="left">
                 </button>
                 <button class="next" onclick="moveSlide(1)">
-                    <img src="img/next.png" alt="right">
+                    <img class="nextBtn" src="img/next.png" alt="right">
                 </button>
+                
+<!-- Кнопка для увеличения слайдера -->
+<button id="zoomSliderBtn">
+    <img src="img/enlarge.svg">
+</button>
+
+<style>
+  /* Стили для кнопки */
+  #zoomSliderBtn {
+    opacity: 0.4;
+    transition: opacity 0.4s;
+      bottom: 10px; /* Отступ сверху */
+      right: 10px; /* Отступ справа */
+      z-index: 1000; /* Поверх всех элементов */
+      color: white; /* Белый цвет текста */
+      border: none; /* Убираем границы */
+      padding: 10px; /* Отступы внутри кнопки */
+      font-size: 20px; /* Размер шрифта */
+      cursor: pointer; /* Курсор в виде указателя */
+  }
+  #zoomSliderBtn:hover{
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  document.getElementById("zoomSliderBtn").addEventListener("click", function() {
+      let slider = document.querySelector(".slider-container"); // Находим слайдер (убедись, что он имеет этот класс)
+      let slideText = document.querySelector(".slideText"); // Находим элемент slideText
+      let wrapper = document.querySelector(".wrapper"); // Находим элемент slideText
+      let nextBtn = document.querySelector(".nextBtn");
+      let prevBtn = document.querySelector(".prevBtn");
+      
+      if (slider) {
+          let currentScale = parseFloat(slider.dataset.scale) || 1; // Получаем текущий масштаб (по умолчанию 1)
+          
+          if (currentScale === 1) {
+                currentScale = 1.5; // Увеличиваем масштаб
+
+                nextBtn.style.opacity = 0.4;
+                nextBtn.style.transition = "opacity 0.5s ease";
+                prevBtn.style.opacity = 0.4;
+                prevBtn.style.transition = "opacity 0.5s ease";
+
+                wrapper.style.backgroundImage = "none";
+                wrapper.style.backgroundColor = "rgba(33, 31, 48, 1)";
+          } else {
+                currentScale = 1; // Возвращаем к обычному размеру
+
+                nextBtn.style.opacity = 0.8;
+                nextBtn.style.transition = "opacity 0.5s ease";
+                prevBtn.style.opacity = 0.8;
+                prevBtn.style.transition = "opacity 0.5s ease";
+
+                wrapper.style.backgroundImage = "url('img/Pink.png')";
+          }
+
+          slider.dataset.scale = currentScale; // Сохраняем новое значение масштаба
+          slider.style.transform = `scale(${currentScale})`; // Применяем увеличение
+          slider.style.transition = "transform 0.3s ease"; // Добавляем анимацию
+
+          // Увеличиваем margin-top у slideText
+          if (slideText) {
+              let currentMargin = parseFloat(window.getComputedStyle(slideText).marginTop) || 0;
+              slideText.style.marginTop = currentScale === 1.5 ? `${currentMargin + 80}px` : `${currentMargin - 80}px`;
+              slideText.style.transition = "margin-top 0.3s ease";
+          }
+
+      }
+  });
+</script>
+
+
+
             </div>
             
             <div class="slide-text">
-                <p id="slideText">Сегодня расскажем, как создать 2D-платформер в Unity. Это увлекательный жанр, в котором вам нужно перемещаться по уровням. Играя в такие игры, можно легко привыкнуть к механике, а вот разрабатывать их — настоящее удовольствие. Давайте пошагово разберемся, как школьникам и начинающим программистам создать подобную игру в Unity.</p>
+                <p class="slideText" id="slideText">Сегодня расскажем, как создать 2D-платформер в Unity. Это увлекательный жанр, в котором вам нужно перемещаться по уровням. Играя в такие игры, можно легко привыкнуть к механике, а вот разрабатывать их — настоящее удовольствие. Давайте пошагово разберемся, как школьникам и начинающим программистам создать подобную игру в Unity.</p>
             </div>
 
         </div>
