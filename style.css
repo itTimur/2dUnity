@@ -71,7 +71,7 @@ element.style {
     width: 1333px;
     margin: 0 auto;
     position: relative;
-    padding-bottom: 40px;
+    padding: 0 40px 40px 40px;
     overflow: hidden;
 }
 div {
@@ -178,4 +178,91 @@ button img {
 .navigate-btn:hover {
     background-color: #c98b57;
     transition: background-color 0.3s ease;
+}.more_information_toggle {
+    margin: 140px 0 20px 0;
+    border: 1px solid #43405b;
+    border-radius: 8px;
+}
+
+.toggle_row {
+    padding: 12px;
+    cursor: pointer;
+}
+
+.toggle_info_btn {
+    color: #e4a672;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Стилизуем SVG (цвет и плавный поворот) */
+.icon_down_tick {
+    fill: white; /* Делаем иконку белой */
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Анимация раскрытия */
+.info_panel_wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    background: rgba(33, 31, 48, 0.9);
+    padding: 0 15px;
+}
+
+/* Когда открывается */
+.info_panel_wrapper.active {
+    max-height: 500px; /* Достаточно большое значение, чтобы вместить контент */
+    padding: 15px;
+}
+
+/* Поворот SVG при открытии */
+.toggle_info_btn.active .icon_down_tick {
+    transform: rotate(180deg);
+}
+
+.game_info_panel_widget table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.game_info_panel_widget td {
+    padding: 8px;
+    border-bottom: 1px solid #43405b;
+}
+
+.game_info_panel_widget a {
+    color: #e4a672;
+    text-decoration: none;
+}
+
+
+.download-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #e4a672;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #c98b57;
+}
+
+.file_size{
+    opacity: 0.7;
+}
+/* Анимация исчезновения страницы */
+.page-transition {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.page-transition.fade-out {
+    opacity: 0;
 }

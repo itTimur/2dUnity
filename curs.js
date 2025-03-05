@@ -1,4 +1,5 @@
 let currentSlide = 0;
+let isAnimating = false;
 
 const slideTitles = [
     "О курсе",
@@ -30,7 +31,7 @@ const slideTexts = [
     "Сегодня расскажем, как создать 2D-платформер в Unity. Это увлекательный жанр, в котором вам нужно перемещаться по уровням. Играя в такие игры, можно легко привыкнуть к механике, а вот разрабатывать их — настоящее удовольствие.",
     "Давайте пошагово разберемся, начинающим программистам создать подобную игру в Unity. Перед тем, как начать, откройте Unity и создайте новый 2D проект.",
     "Присвойте ему имя и нажмите Create Project.",
-    "Для начала вам понадобятся спрайты для игры. Их можно создать самостоятельно или скачать с различных сайтов, например, на AssetStore. Важно, чтобы у вас были спрайты для персонажа, платформ и фона. Загружаем их и импортируем в проект.",
+    "Для начала вам понадобятся спрайты для игры. Их можно создать самостоятельно или скачать с различных сайтов, например, на AssetStore или на нашем сайте на главной странице. Важно, чтобы у вас были спрайты для персонажа, платформ и фона. Загружаем их и импортируем в проект.",
     "Используем спрайт земли, чтобы собрать платформу. Для удобства перемещаем окно игры рядом с окном сцены. Чтобы быстрее создать платформу, нажимаем CTRL+D, чтобы дублировать блоки земли. Перетаскивание с зажатым CTRL будет перемещать элементы по сетке, что поможет выровнять их. Дублируем блоки до тех пор, пока не получится нужная длина платформы. ",
     "Все элементы можно собрать в пустой объект, чтобы перемещать и масштабировать платформу целиком.",
     "Создаем Canvas (полотно), на котором разместим задний фон.",
@@ -53,19 +54,78 @@ const slideTexts = [
 
 ];
 
+
 function moveSlide(step) {
+    if (isAnimating) return;
+    isAnimating = true;
+
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
-
-    currentSlide = (currentSlide + step + totalSlides) % totalSlides;
     const slider = document.querySelector('.slider');
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    // Обновляем текст в зависимости от текущего слайда
-    const slideTitleElement = document.getElementById('slideTitle');
-    slideTitleElement.textContent = slideTitles[currentSlide];
-
     const slideTextElement = document.getElementById('slideText');
-    slideTextElement.textContent = slideTexts[currentSlide];
+    const slideTitleElement = document.getElementById('slideTitle');
+
+    // Анимация исчезновения текста
+    slideTextElement.classList.add('fade-out');
+    slideTitleElement.classList.add('fade-out');
+
+    // Плавное обновление слайда
+    currentSlide = (currentSlide + step + totalSlides) % totalSlides;
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    updateProgressBar();
+
+    // Обновляем контент после небольшой задержки
+    setTimeout(() => {
+        slideTitleElement.textContent = slideTitles[currentSlide];
+        slideTextElement.textContent = slideTexts[currentSlide];
+    }, 150); // Задержка для синхронизации с анимацией
+
+    // Анимация появления текста
+    setTimeout(() => {
+        slideTextElement.classList.remove('fade-out');
+        slideTitleElement.classList.remove('fade-out');
+        slideTextElement.classList.add('fade-in');
+        slideTitleElement.classList.add('fade-in');
+    }, 300);
+
+    // Сброс флага
+    setTimeout(() => {
+        slideTextElement.classList.remove('fade-in');
+        slideTitleElement.classList.remove('fade-in');
+        isAnimating = false;
+    }, 600); // Общее время анимации
+}
+function updateProgressBar() {
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const progress = ((currentSlide + 1) / totalSlides) * 100; // +1, если слайды нумеруются с 0
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    progressBar.style.width = `${progress}%`;
+    progressText.textContent = `${Math.round(progress)}%`;
 }
 
+// Инициализация при загрузке
+window.addEventListener('load', () => {
+    updateProgressBar();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll("a"); // Находим все ссылки
+
+    links.forEach(link => {
+        link.addEventListener("click", function (e) {
+            if (link.getAttribute("target") === "_blank") return; // Игнорируем ссылки, открывающиеся в новом окне
+            
+            e.preventDefault(); // Отменяем стандартный переход
+            const href = this.href; // Получаем ссылку
+
+            document.body.classList.add("fade-out"); // Добавляем эффект исчезновения
+
+            setTimeout(() => {
+                window.location.href = href; // Через 500мс переходим на новую страницу
+            }, 500);
+        });
+    });
+});
